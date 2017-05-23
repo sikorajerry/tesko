@@ -1,11 +1,15 @@
 package home.jsikora.parser;
 
+
+import home.jsikora.dto.ProductCzIkeaDTO;
+import home.jsikora.repository.CzIkeaRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -17,6 +21,10 @@ import java.io.IOException;
 public class ParserHTML {
     private static final Logger log = LoggerFactory.getLogger(ParserHTML.class);
 
+    @Autowired
+    private CzIkeaRepository czIkeaRepository;
+
+  //TODO vratit List<DTO> nebo ulozit ??
     public void parserHtmlPage(String page) {
         log.info("ParserHTML.parserHtmlPage("+page+")");
         Document doc = null;
@@ -45,6 +53,8 @@ public class ParserHTML {
                 }
                 log.info(productFromLink+ " " + vyrobek + " " +nazev +" "+ cena);//+element.toString()
 
+                //Todo ale zde udelam metodu na okamzite ulozeni do databaze
+                czIkeaRepository.save(new ProductCzIkeaDTO(vyrobek,nazev,cena));
 
             }
 
@@ -76,4 +86,6 @@ public class ParserHTML {
 
         return cena;
     }
+
+
 }

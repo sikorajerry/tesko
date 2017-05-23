@@ -21,7 +21,7 @@ public class IkeaCzPages {
     @PostConstruct
     public void initialize() {
 
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 1; i++) {
             log.info("jsem zde http://www.ikea.com/cz/cs/catalog/productsaz/"+ i +"/");
             listPages.add("http://www.ikea.com/cz/cs/catalog/productsaz/"+ i +"/");
         }
