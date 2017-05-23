@@ -2,6 +2,8 @@ package home.jsikora.parser;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,14 @@ public class ParserHTML {
             doc = Jsoup.connect(page).get();
             String title = doc.title();
             log.info("docTitle - "+ title);
+            Elements content = doc.getElementsByClass("productsAzLink");
+
+            for(Element element: content) {
+                log.info(element.toString());
+            }
+
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package home.jsikora.Ikea;
 
 
+import home.jsikora.sampleData.IkeaCzPages;
 import home.jsikora.service.Services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,10 +27,16 @@ public class ShedulerTask {
     @Autowired
     private Services  services;
 
+    @Autowired
+    private IkeaCzPages ikeaCzPages;
+
     @Scheduled(fixedRate = 10000)
     public void reportCurrentTime() {
         log.info("The time is now {}", dateFormat.format(new Date()));
-        services.parseHtmlPage("http://www.ikea.com/cz/cs/catalog/productsaz/0/");
+        for (String page: ikeaCzPages.getListPages()) {
+            services.parseHtmlPage(page);
+        }
+
 
     }
 
