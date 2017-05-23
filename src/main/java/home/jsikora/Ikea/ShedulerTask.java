@@ -30,7 +30,7 @@ public class ShedulerTask {
     @Autowired
     private IkeaCzPages ikeaCzPages;
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 1000 * 60 * 60)
     public void reportCurrentTime() {
         log.info("The time is now {}", dateFormat.format(new Date()));
         for (String page: ikeaCzPages.getListPages()) {

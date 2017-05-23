@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,12 +16,15 @@ import java.util.List;
 public class IkeaCzPages {
 
     private static final Logger log = LoggerFactory.getLogger(IkeaCzPages.class);
-    private List<String> listPages;
+    private List<String> listPages = new ArrayList<>();
 
     @PostConstruct
     public void initialize() {
-        String[] array = new String[] { "http://www.ikea.com/cz/cs/catalog/productsaz/0/", "http://www.ikea.com/cz/cs/catalog/productsaz/1/" };
-       listPages = Arrays.asList(array);
+
+        for (int i = 0; i < 25; i++) {
+            log.info("jsem zde http://www.ikea.com/cz/cs/catalog/productsaz/"+ i +"/");
+            listPages.add("http://www.ikea.com/cz/cs/catalog/productsaz/"+ i +"/");
+        }
     }
 
     public List<String> getListPages() {
