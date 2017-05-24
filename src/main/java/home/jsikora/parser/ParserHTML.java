@@ -54,7 +54,12 @@ public class ParserHTML {
                 log.info(productFromLink+ " " + vyrobek + " " +nazev +" "+ cena);//+element.toString()
 
                 //Todo ale zde udelam metodu na okamzite ulozeni do databaze
-                czIkeaRepository.save(new ProductCzIkeaDTO(vyrobek,nazev,cena));
+                if (vyrobek.isEmpty() || cena.isEmpty() || nazev.isEmpty()) {
+                    log.warn("vyrobek : " + vyrobek+", nazev : "+nazev+", cena"+cena);
+                } else {
+                    czIkeaRepository.save(new ProductCzIkeaDTO(vyrobek,nazev,cena));
+
+                }
 
             }
 
