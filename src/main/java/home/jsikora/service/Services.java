@@ -20,7 +20,7 @@ public class Services {
 
 
 
-    public void parseHtmlPage(String url) {
-        parserHTML.parserHtmlPage(url);
+    public void parseHtmlPage(String url,String country) {
+        parserHTML.parserHtmlPage(url,country);
     }
 }

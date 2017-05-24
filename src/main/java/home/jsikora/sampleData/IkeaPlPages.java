@@ -12,9 +12,9 @@ import java.util.List;
  * Created by sungsam on 23.5.17.
  */
 @Component
-public class IkeaCzPages {
+public class IkeaPlPages {
 
-    private static final Logger log = LoggerFactory.getLogger(IkeaCzPages.class);
+    private static final Logger log = LoggerFactory.getLogger(IkeaPlPages.class);
     private List<String> listPages = new ArrayList<>();
 
     @PostConstruct
@@ -22,7 +22,7 @@ public class IkeaCzPages {
 
         for (int i = 0; i < 25; i++) {
             log.info("jsem zde http://www.ikea.com/cz/cs/catalog/productsaz/"+ i +"/");
-            listPages.add("http://www.ikea.com/cz/cs/catalog/productsaz/"+ i +"/");
+            listPages.add("http://www.ikea.com/pl/pl/catalog/productsaz/"+ i +"/");
         }
     }
 

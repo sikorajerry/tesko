@@ -2,7 +2,9 @@ package home.jsikora.parser;
 
 
 import home.jsikora.dto.ProductCzIkeaDTO;
+import home.jsikora.dto.ProductPlIkeaDTO;
 import home.jsikora.repository.CzIkeaRepository;
+import home.jsikora.repository.PlIkeaRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sungsam on 23.5.17.
@@ -24,8 +28,13 @@ public class ParserHTML {
     @Autowired
     private CzIkeaRepository czIkeaRepository;
 
+    @Autowired
+    private PlIkeaRepository plIkeaRepository;
+
+    private List<String> spatneZaznamy = new ArrayList<>();
+
   //TODO vratit List<DTO> nebo ulozit ??
-    public void parserHtmlPage(String page) {
+    public void parserHtmlPage(String page,String country) {
         log.info("ParserHTML.parserHtmlPage("+page+")");
         Document doc = null;
 
@@ -54,10 +63,16 @@ public class ParserHTML {
                 log.info(productFromLink+ " " + vyrobek + " " +nazev +" "+ cena);//+element.toString()
 
                 //Todo ale zde udelam metodu na okamzite ulozeni do databaze
-                if (vyrobek.isEmpty() || cena.isEmpty() || nazev.isEmpty()) {
-                    log.warn("vyrobek : " + vyrobek+", nazev : "+nazev+", cena"+cena);
+                if (vyrobek.isEmpty() || cena.isEmpty() || nazev.isEmpty() || cena.equals("zero")) {
+                    spatneZaznamy.add("vyrobek : " + vyrobek+", nazev : "+nazev+", cena"+cena);
+
                 } else {
-                    czIkeaRepository.save(new ProductCzIkeaDTO(vyrobek,nazev,cena));
+                    if (country.equals("cz")) {
+                        czIkeaRepository.save(new ProductCzIkeaDTO(vyrobek,nazev,cena));
+                    } else if (country.equals("pl")) {
+                        plIkeaRepository.save(new ProductPlIkeaDTO(vyrobek,nazev,cena));
+                    }
+
 
                 }
 
@@ -67,6 +82,10 @@ public class ParserHTML {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        for (String s : spatneZaznamy) {
+            log.warn(s);
         }
 
 

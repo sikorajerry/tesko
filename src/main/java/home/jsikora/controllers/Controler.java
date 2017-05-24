@@ -13,7 +13,7 @@ public class Controler {
     @Autowired
     ParserHTML parserHTML;
 
-    public void parseHtmlPage(String url) {
-        parserHTML.parserHtmlPage(url);
+    public void parseHtmlPage(String url,String country) {
+
     }
 }
