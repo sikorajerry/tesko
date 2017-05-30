@@ -1,0 +1,17 @@
+CREATE VIEW differencesView
+AS SELECT  product_name, c.price, cast(trim(substring(p.price from '$...')) as int)  * 6,338, p.price
+FROM product_cz c, product_pl p
+WHERE c.serial_number=p.serial_number;
+
+
+CREATE VIEW differencesView
+AS SELECT  c.product_name, c.price as CZ, cast(trim(both 'PLN' from p.price)) as int)  * 6,338 as PL
+FROM product_cz c, product_pl p
+WHERE c.serial_number=p.serial_number;
+
+CREATE VIEW differencesView
+AS SELECT  c.product_name, c.price as CZ, to_number(trim(both 'PLN' from p.price), '9999.99')  * 6.33 as PL
+FROM product_cz c, product_pl p
+WHERE c.serial_number=p.serial_number;
+
+to_number('1210.73', '9999.99')
