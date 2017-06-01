@@ -19,7 +19,7 @@ public class ProductPlIkeaDTO {
 
     private String productName;
 
-    private String price;
+    private double price;
 
     public Long getId() {
         return id;
@@ -45,15 +45,15 @@ public class ProductPlIkeaDTO {
         this.productName = productName;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public ProductPlIkeaDTO(String serialNumber, String productName, String price) {
+    public ProductPlIkeaDTO(String serialNumber, String productName, double price) {
         this.serialNumber = serialNumber;
         this.productName = productName;
         this.price = price;

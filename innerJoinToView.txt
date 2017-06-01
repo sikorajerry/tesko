@@ -15,3 +15,14 @@ FROM product_cz c, product_pl p
 WHERE c.serial_number=p.serial_number;
 
 to_number('1210.73', '9999.99')
+
+
+//TOTO jsem udelal posledne  a funguje to dobre:D
+CREATE VIEW differencesView
+AS SELECT  c.product_name,c.serial_number, c.price as Kc,p.price as PLN
+FROM product_cz c, product_pl p
+WHERE c.serial_number=p.serial_number;
+
+select *,pln*6.33 as vypocet,kc - (pln*6.33) as rozdil from differencesview where kc>pln*6.33 order by rozdil;
+
+

@@ -1,6 +1,7 @@
 package home.jsikora.parser;
 
 
+
 import home.jsikora.dto.ProductCzIkeaDTO;
 import home.jsikora.dto.ProductPlIkeaDTO;
 import home.jsikora.repository.CzIkeaRepository;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,7 +62,7 @@ public class ParserHTML {
                 }  else {
                     cena = "zero";
                 }
-                log.info(productFromLink+ " " + vyrobek + " " +nazev +" "+ cena);//+element.toString()
+                //log.info(productFromLink+ " " + vyrobek + " " +nazev +" "+ cena);//+element.toString()
 
                 //Todo ale zde udelam metodu na okamzite ulozeni do databaze
                 if (vyrobek.isEmpty() || cena.isEmpty() || nazev.isEmpty() || cena.equals("zero")) {
@@ -68,9 +70,21 @@ public class ParserHTML {
 
                 } else {
                     if (country.equals("cz")) {
-                        czIkeaRepository.save(new ProductCzIkeaDTO(vyrobek,nazev,cena));
+                        String cenaUpravena = cena.substring(0,cena.length()-2);
+
+                        if(cenaUpravena.length()>3) {
+                           cenaUpravena = this.upravitCenuProCz(cenaUpravena);
+                        }
+
+                        czIkeaRepository.save(new ProductCzIkeaDTO(vyrobek,nazev,Double.parseDouble(cenaUpravena)));
                     } else if (country.equals("pl")) {
-                        plIkeaRepository.save(new ProductPlIkeaDTO(vyrobek,nazev,cena));
+                        String cenaUpravena = cena.substring(0,cena.indexOf("PLN")-1);
+                        cenaUpravena = cenaUpravena.replace(",",".");
+                        if(cenaUpravena.length()>3) {
+                            cenaUpravena = this.upravitCenuProCz(cenaUpravena);
+                        }
+
+                        plIkeaRepository.save(new ProductPlIkeaDTO(vyrobek,nazev,Double.parseDouble(cenaUpravena)));
                     }
 
 
@@ -100,15 +114,33 @@ public class ParserHTML {
 
         Element content = doc.getElementsByClass("packagePrice").first();
         if (content !=null) {
-            log.info("element in not null");
+            //log.info("element in not null");
             cena =  content.text();
         } else {
-            log.warn("element NOT FOUND");
+            //log.warn("element NOT FOUND");
 
         }
 
 
         return cena;
+    }
+
+    private String upravitCenuProCz(String cenaUpravena) {
+        String vystup="";
+        char[] myNameChars = cenaUpravena.toCharArray();
+        char tecka='.';
+
+        for (int i = 0; i < myNameChars.length; i++) {
+            if (myNameChars[i]==tecka) {
+
+                vystup +=tecka;
+            } else if (Character.getNumericValue(myNameChars[i])== -1) {
+
+            } else {
+                vystup += myNameChars[i];
+            }
+        }
+        return vystup;
     }
 
 

@@ -19,7 +19,7 @@ public class ProductCzIkeaDTO {
 
     private String productName;
 
-    private String price;
+    private double price;
 
     public Long getId() {
         return id;
@@ -45,27 +45,19 @@ public class ProductCzIkeaDTO {
         this.productName = productName;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public ProductCzIkeaDTO(String serialNumber, String productName, String price) {
+    public ProductCzIkeaDTO(String serialNumber, String productName, double price) {
         this.serialNumber = serialNumber;
         this.productName = productName;
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return "ProductCzIkeaDTO{" +
-                "id=" + id +
-                ", serialNumber='" + serialNumber + '\'' +
-                ", productName='" + productName + '\'' +
-                ", price='" + price + '\'' +
-                '}';
-    }
+
 }
