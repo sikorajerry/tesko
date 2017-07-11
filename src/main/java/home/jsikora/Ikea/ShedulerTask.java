@@ -1,19 +1,17 @@
 package home.jsikora.Ikea;
 
 
-import home.jsikora.sampleData.IkeaCzPages;
-import home.jsikora.sampleData.IkeaPlPages;
-import home.jsikora.service.Services;
+import home.jsikora.sampleData.BezrealitkySeznamStranek;
+import home.jsikora.service.ServiceBezrealitky;
+import home.jsikora.service.ServiceSreality;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -26,22 +24,28 @@ public class ShedulerTask {
 
 
     @Autowired
-    private Services  services;
+    private ServiceSreality serviceSreality;
 
     @Autowired
-    private IkeaCzPages ikeaCzPages;
+    private ServiceBezrealitky serviceBezrealitky;
 
-    @Autowired
-    private IkeaPlPages ikeaPlPages;
+
+
 
     @Scheduled(fixedRate = 1000 * 60 * 60)
-    public void reportCurrentTime() {
+    public void reportCurrentTime() throws Exception {
         log.info("The time is now {}", dateFormat.format(new Date()));
-        for (String page: ikeaCzPages.getListPages()) { services.parseHtmlPage(page,"cz"); }
-        for (String page: ikeaPlPages.getListPages()) { services.parseHtmlPage(page,"pl"); }
-
+        serviceSreality.parseHtmlPages();
 
     }
 
+
+ /*   @Scheduled(fixedRate = 1000 * 60 * 60)
+    public void spustBezRealitky() throws Exception {
+        log.info("The time is now {}", dateFormat.format(new Date()));
+        serviceBezrealitky.parseHtmlPages();
+
+    }
+    */
 
 }

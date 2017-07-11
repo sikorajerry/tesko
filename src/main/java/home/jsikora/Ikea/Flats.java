@@ -10,9 +10,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EntityScan("home.jsikora.dto")
 @EnableScheduling
 @SpringBootApplication(scanBasePackages = "home.jsikora")
-public class IkeaApplication {
+public class Flats {
 
 	public static void main(String[] args) {
-		SpringApplication.run(IkeaApplication.class, args);
+		SpringApplication.run(Flats.class, args);
 	}
 }
